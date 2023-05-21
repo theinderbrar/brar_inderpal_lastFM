@@ -8,10 +8,7 @@ export default {
         </h1>
         <div class="login_box">
             <form>
-                <div>
-                    <label> Name </label>
-                    <input type="text" v-model="username">
-                </div>
+                <h1>Login</h1>
                 <div>
                     <label> E-mail </label>
                     <input type="text" v-model="email">
@@ -20,7 +17,7 @@ export default {
                     <label> Password </label>
                     <input type="text" v-model="password">
                 </div>
-                <p>New to Roku Flashback? <router-link class="signup" to="/">Sign up now</router-link></p>
+                <p>New to SoundSpot? <router-link class="signup" to="/signup">Sign up now</router-link></p>
                 <input type="submit" value="Login">
             </form>
         </div>
@@ -31,7 +28,6 @@ export default {
 
   data() {
     return {
-      name: "",
       email: "",
       password: "",
     };
