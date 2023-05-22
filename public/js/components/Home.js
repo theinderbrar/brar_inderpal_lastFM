@@ -1,4 +1,5 @@
 import PopularSection from "./PopularSection.js";
+import BottomNav from "./BottomNav.js";
 
 export default {
     name: "Home",
@@ -49,6 +50,7 @@ export default {
           <PopularSection />
       </div>
   </div>
+  <BottomNav/>
       `,
   
       data() {
@@ -63,7 +65,8 @@ export default {
     },
 
     components:{
-      PopularSection
+      PopularSection,
+      BottomNav
     }
 
   };
