@@ -254,7 +254,7 @@ input[type="submit"] {
   background-color: #282828;
   display: flex;
   justify-content: space-around;
-  padding: 12px 0;
+  padding: 8px 0;
   margin: 0 auto;
   max-width: calc(100% - 40px);
   /* Account for left and right margin */
@@ -265,7 +265,14 @@ input[type="submit"] {
 .nav-item {
   text-decoration: none;
   color: #ffffff;
-  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.nav-item p {
+  font-size: 10px;
+  margin: 0;
 }
 
 /* artist card */
