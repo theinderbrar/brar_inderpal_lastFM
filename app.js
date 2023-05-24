@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const userRoutes = require("./routes/user");
+const lastFM = require("./routes/lastFM")
 const db = require("./db");
 
 const port = process.env.PORT || 5000;
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
 app.use(express.static("public", { extensions: ["html", "css"] }));
 
 app.use("/api/user", userRoutes);
+app.use("/api/lastfm",lastFM)
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "\\index.html");
