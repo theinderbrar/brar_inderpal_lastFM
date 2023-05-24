@@ -6,4 +6,52 @@ router.get("/", (req, res) => res.json("User"));
 
 router.get("/data", (req, res) => res.json("data api"));
 
+// Add a new user
+router.post("/register", (req, res) => {
+  const { name, username, email, password } = req.body;
+  const query =
+    "INSERT INTO users (name, username, email, password) VALUES (?,?, ?, ?)";
+  req.db.query(query, [name, username, email, password], (err, result) => {
+    if (err) {
+      console.error("Error adding user:", err);
+      res.status(500).json({ error: "Failed to add user" });
+    } else {
+      res.json({ message: "User added successfully" });
+    }
+  });
+});
+
+// Perform login
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  const query = "SELECT * FROM users WHERE email = ? AND password = ?";
+  req.db.query(query, [email, password], (err, result) => {
+    if (err) {
+      console.error("Error performing login:", err);
+      res.status(500).json({ error: "Failed to perform login" });
+    } else if (result.length === 0) {
+      res.status(401).json({ error: "Invalid credentials" });
+    } else {
+      res.json({ message: "Login successful" });
+    }
+  });
+});
+
+// Get artists for a user
+router.get("/:userId/artists", (req, res) => {
+  const { userId } = req.params;
+  const query = "SELECT likedArtists FROM users WHERE id = ?";
+  req.db.query(query, [userId], (err, result) => {
+    if (err) {
+      console.error("Error retrieving artists:", err);
+      res.status(500).json({ error: "Failed to retrieve artists" });
+    } else if (result.length === 0) {
+      res.status(404).json({ error: "User not found" });
+    } else {
+      const { likedArtists } = result[0];
+      res.json({ likedArtists });
+    }
+  });
+});
+
 module.exports = router;
