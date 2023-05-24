@@ -59,13 +59,13 @@ function createUsersTable() {
 
 function createLikedArtistsTable() {
   const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS likedArtists (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      userId INT,
-      artistName VARCHAR(255) NOT NULL,
-      FOREIGN KEY (userId) REFERENCES users(id)
-    )
-  `;
+  CREATE TABLE IF NOT EXISTS likedArtists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
+    artist VARCHAR(255) NOT NULL,
+    image TEXT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id)
+  )`;
   connection.query(createTableQuery, (err) => {
     if (err) {
       console.error("Error creating likedArtists table:", err);

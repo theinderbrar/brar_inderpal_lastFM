@@ -18,7 +18,7 @@ export default {
 
   //src="images/playlist_1.jpg"
 
-  mounted() {
-    console.log(this.data);
-  },
+  // mounted() {
+  //   console.log(this.data);
+  // },
 };

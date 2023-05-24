@@ -16,12 +16,27 @@ export default {
     },
   },
 
+  data() {
+    return {
+      userId: 0,
+    };
+  },
+
+  mounted() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.userId = user.id;
+    }
+    console.log(this.userId);
+  },
+
   methods: {
     async addFavArtist(artistData) {
       const data = {
         artist: artistData.name,
         image: artistData.image[2]["#text"],
         id: artistData.mbid,
+        userId: this.userId,
       };
 
       // Perform the logic to add the artist to favorites
@@ -31,6 +46,7 @@ export default {
           data
         );
         console.log(res.data);
+        this.$router.push({ name: "home" });
       } catch (error) {
         console.error(error);
       }

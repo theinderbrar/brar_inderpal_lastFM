@@ -1,5 +1,5 @@
 const express = require("express");
-
+const db = require("../db");
 const router = express.Router();
 
 router.get("/", (req, res) => res.json("User"));
@@ -13,7 +13,7 @@ router.post("/register", (req, res) => {
   const insertQuery =
     "INSERT INTO users (name, username, email, password) VALUES (?,?, ?, ?)";
 
-  const selectQuery = "SELECT name,username FROM users WHERE username = ?";
+  const selectQuery = "SELECT name,username,id FROM users WHERE username = ?";
 
   req.db.query(
     insertQuery,
@@ -56,7 +56,8 @@ router.post("/login", (req, res) => {
 // Get artists for a user
 router.get("/:userId/artists", (req, res) => {
   const { userId } = req.params;
-  const query = "SELECT * FROM likedArtists WHERE userId = ?";
+  console.log(userId)
+  const query = `SELECT * FROM likedArtists WHERE userId = ${userId}`;
   req.db.query(query, [userId], (err, result) => {
     if (err) {
       console.error("Error retrieving artists:", err);
@@ -64,27 +65,29 @@ router.get("/:userId/artists", (req, res) => {
     } else if (result.length === 0) {
       res.status(404).json({ error: "User not found" });
     } else {
-      const likedArtists = result.map((row) => row.artistName);
-      res.json({ likedArtists });
+      console.log(result)
+      res.json(result)
+      // const likedArtists = result.map((row) => row.artistName);
+      // res.json({ likedArtists });
     }
   });
 });
 
-
 router.post("/add-artist", (req, res) => {
-  const { userId, artistName } = req.body;
-  const query = `
-    INSERT INTO likedArtists (${userId}, ${artistName})
-    VALUES (?, ?)
-  `;
-  const values = [userId, artistName];
+  const { userId, artist, image } = req.body;
 
-  connection.query(query, values, (err, result) => {
+  // Insert the artist details into the likedArtists table
+  const query =
+    "INSERT INTO likedArtists (userId, artist, image) VALUES (?, ?, ?)";
+  db.query(query, [userId, artist, image], (err, result) => {
     if (err) {
-      console.error("Error adding liked artist:", err);
-    } else {
-      console.log("Liked artist added successfully");
+      console.error("Error adding artist: ", err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while adding the artist." });
+      return;
     }
+    res.status(200).json({ message: "Artist added successfully." });
   });
 });
 

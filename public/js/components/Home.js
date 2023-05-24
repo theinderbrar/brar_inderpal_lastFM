@@ -14,24 +14,24 @@ export default {
         </div>
 
         <div class="your_playlist_card">
-            <h1>Your Playlist</h1>
+            <h1>Your Artists</h1>
             <div class="playlist_card">
                 <div class="playlist_card_image">
-                    <img src="images/playlist_1.jpg" alt="">
+                    <img :src="getImage(0)" alt="">
                 </div>
                 <div class="playlist_card_image">
-                    <img src="images/playlist_1.jpg" alt="">
+                    <img :src="getImage(1)" alt="">
                 </div>
                 <div class="playlist_card_image">
-                    <i class="fa-sharp fa-light fa-music-note"></i>
+                    <img :src="getImage(2)" alt="">
                 </div>
                 <div class="playlist_card_image">
-
+                    <img :src="getImage(3)" alt="">
                 </div>
             </div>
             <div class="total_artists">
                 <h2>Favorite Artists</h2>
-                <p>2 Artists</p>
+                <p>{{ favArtists.length }} Artists</p>
             </div>
         </div>
         <div class="popular_section">
@@ -44,21 +44,23 @@ export default {
       <BottomNav/>
       `,
 
-//       <div class="popular_section">
-//       <h1>Popular</h1>
-//       <PopularSection />
-//   </div>
+  //       <div class="popular_section">
+  //       <h1>Popular</h1>
+  //       <PopularSection />
+  //   </div>
 
-//   <div class="popular_section">
-//       <h1>Popular</h1>
-//       <PopularSection />
-//   </div>
+  //   <div class="popular_section">
+  //       <h1>Popular</h1>
+  //       <PopularSection />
+  //   </div>
 
   data() {
     return {
       artist: "",
       name: "",
       topTracks: [],
+      favArtists: [],
+      userId: 0,
     };
   },
   methods: {
@@ -68,21 +70,36 @@ export default {
         query: { artist: this.artist },
       });
     },
+
+    getImage(index) {
+      return this.favArtists[index]
+        ? this.favArtists[index].image
+        : "/images/artist_icon.png";
+    },
   },
 
   created() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       this.name = user.name;
+      this.userId = user.id;
     }
 
     const getTopTracks = async () => {
       const res = await axios.get("http://localhost:5000/api/lastfm/tracks");
       const data = res.data;
-      console.log(data[0])
       this.topTracks = data.slice(0, 10);
     };
 
+    const getMyArtists = async () => {
+      const res = await axios(
+        `http://localhost:5000/api/user/${this.userId}/artists`
+      );
+      this.favArtists = res.data;
+      console.log(res.data);
+    };
+
+    getMyArtists();
     getTopTracks();
   },
 

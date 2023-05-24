@@ -156,7 +156,7 @@ input[type="submit"] {
 .playlist_card {
   width: 150px;
   height: 150px;
-  background-color: #272727;
+  background-color: #000000;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
