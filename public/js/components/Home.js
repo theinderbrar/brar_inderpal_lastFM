@@ -6,7 +6,7 @@ export default {
 
   template: `
       <div class="home_wrapper">
-        <h1>Hi There,<br><span>Anima</span></h1>
+        <h1>Hi There,<br><span>{{ name }}</span></h1>
         <div class="input_wrapper">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input v-on:change="changeText" @input="e => artist = e.target.value" :value="artist" type="text"
@@ -35,26 +35,30 @@ export default {
             </div>
         </div>
         <div class="popular_section">
-            <h1>Popular</h1>
-            <PopularSection />
+            <h1>Popular Songs</h1>
+            <PopularSection :details="topTracks"/>
         </div>
 
-        <div class="popular_section">
-            <h1>Popular</h1>
-            <PopularSection />
-        </div>
 
-        <div class="popular_section">
-            <h1>Popular</h1>
-            <PopularSection />
-        </div>
       </div>
       <BottomNav/>
       `,
 
+//       <div class="popular_section">
+//       <h1>Popular</h1>
+//       <PopularSection />
+//   </div>
+
+//   <div class="popular_section">
+//       <h1>Popular</h1>
+//       <PopularSection />
+//   </div>
+
   data() {
     return {
       artist: "",
+      name: "",
+      topTracks: [],
     };
   },
   methods: {
@@ -64,6 +68,22 @@ export default {
         query: { artist: this.artist },
       });
     },
+  },
+
+  created() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.name = user.name;
+    }
+
+    const getTopTracks = async () => {
+      const res = await axios.get("http://localhost:5000/api/lastfm/tracks");
+      const data = res.data;
+      console.log(data[0])
+      this.topTracks = data.slice(0, 10);
+    };
+
+    getTopTracks();
   },
 
   components: {

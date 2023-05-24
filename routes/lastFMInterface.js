@@ -17,6 +17,18 @@ async function searchArtists(artistName) {
   }
 }
 
+async function topTracks() {
+  try {
+    const response = await axios.get(
+      `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json`
+    );
+    return response.data.tracks.track;
+  } catch (err) {
+    console.error("Error getting top tracks:", err.response.data);
+    throw err;
+  }
+}
+
 // Function to get top tracks for an artist
 async function getTopTracks(artistName) {
   try {
@@ -140,4 +152,5 @@ module.exports = {
   getTrackInfo,
   getAlbumTracks,
   getArtistTopAlbums,
+  topTracks,
 };

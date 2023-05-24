@@ -8,6 +8,7 @@ const {
   getTrackInfo,
   getAlbumTracks,
   getArtistTopAlbums,
+  topTracks,
 } = require("./lastFMInterface");
 
 const router = express.Router();
@@ -166,6 +167,17 @@ http://localhost:5000/api/lastfm/similar-artists?artistName=ed sheeran
 
 
 */
+
+router.get('/tracks', async (req, res) => {
+    try {
+      const topTracksData = await topTracks();
+      res.status(200).json(topTracksData)
+    } catch (error) {
+      console.error('Failed to get top tracks:', error);
+      res.status(500).json({ error: 'Failed to get top tracks' });
+    }
+  });
+  
 
 // Get artist info
 router.get("/artist-info", async (req, res) => {

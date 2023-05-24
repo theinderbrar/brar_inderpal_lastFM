@@ -220,18 +220,28 @@ input[type="submit"] {
 /* card */
 .card {
   display: inline-block;
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: fit-content;
   margin-right: 10px;
-  background-color: #272727;
+  background-color: #212121;
   border-radius: 5px;
+  overflow-x: hidden;
 }
 
 .card img {
   width: 100%;
-  height: 100%;
+  height: 150px;
   object-fit: cover;
   border-radius: inherit;
+}
+.card p{
+  color: #e6e6e6;
+  line-height: 25px;
+  padding-left: 5%;
+  font-size: 14px;
+}
+.card p span{
+  color: #636363;
 }
 
 /* popularSection */

@@ -56,7 +56,7 @@ router.post("/login", (req, res) => {
 // Get artists for a user
 router.get("/:userId/artists", (req, res) => {
   const { userId } = req.params;
-  const query = "SELECT likedArtists FROM users WHERE id = ?";
+  const query = "SELECT * FROM likedArtists WHERE userId = ?";
   req.db.query(query, [userId], (err, result) => {
     if (err) {
       console.error("Error retrieving artists:", err);
@@ -64,8 +64,26 @@ router.get("/:userId/artists", (req, res) => {
     } else if (result.length === 0) {
       res.status(404).json({ error: "User not found" });
     } else {
-      const { likedArtists } = result[0];
+      const likedArtists = result.map((row) => row.artistName);
       res.json({ likedArtists });
+    }
+  });
+});
+
+
+router.post("/add-artist", (req, res) => {
+  const { userId, artistName } = req.body;
+  const query = `
+    INSERT INTO likedArtists (${userId}, ${artistName})
+    VALUES (?, ?)
+  `;
+  const values = [userId, artistName];
+
+  connection.query(query, values, (err, result) => {
+    if (err) {
+      console.error("Error adding liked artist:", err);
+    } else {
+      console.log("Liked artist added successfully");
     }
   });
 });

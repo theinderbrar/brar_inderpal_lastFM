@@ -16,11 +16,19 @@ export default{
                 <i class="material-icons">person</i>
                 <p>Artists</p>
             </a>
-            <a href="#" class="nav-item">
+            <a @click="logout" href="#" class="nav-item">
                 <i class="material-icons">logout</i>
                 <p>Logout</p>
             </a>
         </div>
-        `
+        `,
+
+        methods:{
+            logout(e){
+                e.preventDefault()
+                localStorage.removeItem("user")
+                this.$router.push({name:"login"})
+            }
+        }
         
 }

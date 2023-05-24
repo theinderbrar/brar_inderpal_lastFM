@@ -11,7 +11,7 @@ export default {
                 <h3>Results for <span>{{ artistName }}</span></h3>
             </div>
             <div class="artists_card_section">
-                <ArtistCard :name="artist.name" :imageUrl="image" />
+                <ArtistCard :data="artist" />
             </div>
         </div>
         `,
@@ -43,6 +43,7 @@ export default {
       );
       this.artist = res.data;
       this.image = this.artist.image[3]["#text"];
+      console.log(res.data)
     };
     getArtist();
   },

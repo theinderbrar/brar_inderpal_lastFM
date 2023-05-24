@@ -1,19 +1,23 @@
-import Card from '../components/Card.js'
+import Card from "../components/Card.js";
 
-export default  {
-    template:
-        `
+export default {
+  template: `
         <div class="card-container">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            <Card v-for="data in details" :key="data.id" :data="data" />
         </div>
         `,
-    components: {
-        Card
-    }
-}
+  components: {
+    Card,
+  },
+
+  props: {
+    details: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  mounted() {
+    console.log(this.details);
+  },
+};
