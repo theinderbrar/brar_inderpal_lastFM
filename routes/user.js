@@ -9,16 +9,32 @@ router.get("/data", (req, res) => res.json("data api"));
 // Add a new user
 router.post("/register", (req, res) => {
   const { name, username, email, password } = req.body;
-  const query =
+  console.log(req.body);
+  const insertQuery =
     "INSERT INTO users (name, username, email, password) VALUES (?,?, ?, ?)";
-  req.db.query(query, [name, username, email, password], (err, result) => {
-    if (err) {
-      console.error("Error adding user:", err);
-      res.status(500).json({ error: "Failed to add user" });
-    } else {
-      res.json({ message: "User added successfully" });
+
+  const selectQuery = "SELECT name,username FROM users WHERE username = ?";
+
+  req.db.query(
+    insertQuery,
+    [name, username, email, password],
+    (err, result) => {
+      if (err) {
+        console.error("Error adding user:", err);
+        res.status(500).json({ error: "Failed to add user" });
+      } else {
+        req.db.query(selectQuery, [username], (err, userResult) => {
+          if (err) {
+            console.error("Error fetching user:", err);
+            res.status(500).json({ error: "Failed to fetch user" });
+          } else {
+            const user = userResult[0];
+            res.json({ message: "User added successfully", user });
+          }
+        });
+      }
     }
-  });
+  );
 });
 
 // Perform login

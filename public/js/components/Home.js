@@ -2,10 +2,9 @@ import PopularSection from "./PopularSection.js";
 import BottomNav from "./BottomNav.js";
 
 export default {
-    name: "Home",
-  
-    template: 
-      `
+  name: "Home",
+
+  template: `
       <div class="home_wrapper">
         <h1>Hi There,<br><span>Anima</span></h1>
         <div class="input_wrapper">
@@ -52,22 +51,23 @@ export default {
       </div>
       <BottomNav/>
       `,
-  
-      data() {
-        return {
-            artist: ""
-        }
-    },
-    methods:{
-        changeText:function(){
-          this.$router.push("/artists")
-        }
-    },
 
-    components:{
-      PopularSection,
-      BottomNav
-    }
+  data() {
+    return {
+      artist: "",
+    };
+  },
+  methods: {
+    changeText: function () {
+      this.$router.push({
+        path: "/artists",
+        query: { artist: this.artist },
+      });
+    },
+  },
 
-  };
-  
+  components: {
+    PopularSection,
+    BottomNav,
+  },
+};

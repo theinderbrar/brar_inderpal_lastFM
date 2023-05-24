@@ -277,6 +277,7 @@ input[type="submit"] {
 
 /* artist card */
 .artist_card {
+  position: relative;
   width: 100px;
   height: fit-content;
 }
@@ -285,6 +286,7 @@ input[type="submit"] {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .artist_card p {
@@ -294,6 +296,14 @@ input[type="submit"] {
   font-size: 12px;
   line-height: 20px;
   text-align: center;
+}
+
+.artist_card i {
+  position: absolute;
+  bottom: 22%;
+  right: 0;
+  font-size: 40px;
+  color: #fff;
 }
 
 /* artists page */
