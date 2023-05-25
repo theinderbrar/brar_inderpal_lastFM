@@ -2,6 +2,7 @@ const express = require("express");
 const {
   searchArtists,
   getTopTracks,
+  getTopArtists,
   getSimilarArtists,
   getArtistInfo,
   getAlbumInfo,
@@ -213,12 +214,18 @@ router.get("/tracks", async (req, res) => {
 router.get("/artist-info", async (req, res) => {
   const { artistName } = req.query;
   try {
-    const artistInfo = await getArtistInfo(artistName);
+    if (artistName === "") {
+      const artistInfo = await getArtistInfo(artistName);
+    }
+    else{
+      const artistInfo = await getTopArtists();
+    }
     res.json(artistInfo);
   } catch (error) {
     res.status(500).json({ error: "Failed to get artist info" });
   }
 });
+
 
 // Get album info
 router.get("/album-info", async (req, res) => {

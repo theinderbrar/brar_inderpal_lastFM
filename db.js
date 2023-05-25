@@ -1,3 +1,4 @@
+const fs = require("fs");
 const mysql = require("mysql2");
 
 // MySQL database connection configuration
@@ -12,66 +13,43 @@ connection.connect((err) => {
     console.error("Error connecting to the database:", err);
     return;
   }
-  createDatabase();
+  executeSQLCommandsFromFile("./db/db.sql");
 });
 
-function createDatabase() {
-  connection.query("CREATE DATABASE IF NOT EXISTS musicApp", (err) => {
+function executeSQLCommandsFromFile(filePath) {
+  fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      console.error("Error creating database:", err);
+      console.error("Error reading SQL file:", err);
       return;
     }
-    console.log("Database created or already exists");
-    useDatabase();
+
+    const sqlCommands = data.split(";");
+
+    connection.query(sqlCommands[0], (err) => {
+      if (err) {
+        console.error("Error executing SQL command:", err);
+        return;
+      }
+      console.log("Database created or already exists");
+      executeNextCommand(sqlCommands, 1);
+    });
   });
 }
 
-function useDatabase() {
-  connection.query("USE musicApp", (err) => {
-    if (err) {
-      console.error("Error selecting database:", err);
-      return;
-    }
-    console.log("Changed to musicApp database");
-    createUsersTable();
-  });
-}
+function executeNextCommand(sqlCommands, index) {
+  if (index >= sqlCommands.length - 1) {
+    console.log("All SQL commands executed successfully");
+    return;
+  }
 
-function createUsersTable() {
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      username VARCHAR(255) NOT NULL UNIQUE,
-      email VARCHAR(255) NOT NULL UNIQUE,
-      password VARCHAR(255) NOT NULL
-    )
-  `;
-  connection.query(createTableQuery, (err) => {
+  connection.query(sqlCommands[index], (err) => {
     if (err) {
-      console.error("Error creating users table:", err);
+      console.error("Error executing SQL command:", err);
       return;
     }
-    console.log("Users table created or already exists");
-    createLikedArtistsTable();
-  });
-}
 
-function createLikedArtistsTable() {
-  const createTableQuery = `
-  CREATE TABLE IF NOT EXISTS likedArtists (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT,
-    artist VARCHAR(255) NOT NULL,
-    image TEXT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users(id)
-  )`;
-  connection.query(createTableQuery, (err) => {
-    if (err) {
-      console.error("Error creating likedArtists table:", err);
-      return;
-    }
-    console.log("likedArtists table created or already exists");
+    console.log(`SQL command ${index + 1} executed successfully`);
+    executeNextCommand(sqlCommands, index + 1);
   });
 }
 

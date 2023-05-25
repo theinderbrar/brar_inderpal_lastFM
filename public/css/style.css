@@ -3,6 +3,7 @@
 * {
   margin: 0;
   font-family: "Rubik", sans-serif;
+  transition: all 0.3s ease;
 }
 h1,
 h2,
@@ -87,7 +88,6 @@ input[type="submit"] {
 /* home */
 .home_wrapper {
   min-height: 100vh;
-  width: 100%;
   background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
   padding: 8% 5%;
   display: flex;
@@ -318,7 +318,6 @@ input[type="submit"] {
 
 /* artists page */
 .artists_page {
-  width: 100%;
   min-height: 100vh;
   background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
   padding: 8% 5%;
@@ -359,7 +358,6 @@ input[type="submit"] {
 
 /* myalbums */
 .myAlbums_section {
-  width: 100%;
   min-height: 100vh;
   background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
   padding: 8% 5%;
@@ -367,7 +365,6 @@ input[type="submit"] {
 
 /* myartists */
 .my_artist_wrapper {
-  width: 100%;
   min-height: 100vh;
   background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
   padding: 8% 5%;

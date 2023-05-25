@@ -7,13 +7,13 @@ export default {
   template: `
       <div class="home_wrapper">
         <h1>Hi There,<br><span>{{ name }}</span></h1>
-        <div class="input_wrapper">
+        <div class="input_wrapper" >
             <i class="fa-solid fa-magnifying-glass"></i>
             <input v-on:change="changeText" @input="e => artist = e.target.value" :value="artist" type="text"
                 placeholder="Search Artists">
         </div>
 
-        <div class="your_playlist_card">
+        <div class="your_playlist_card" @click="goToMyArtists">
             <h1>Your Artists</h1>
             <div class="playlist_card">
                 <div class="playlist_card_image">
@@ -58,12 +58,19 @@ export default {
     return {
       artist: "",
       name: "",
+      topArtists: [],
+      topAlbums: [],
       topTracks: [],
       favArtists: [],
       userId: 0,
     };
   },
   methods: {
+    goToMyArtists(e){
+      e.preventDefault();
+      this.$router.push({name:"myartists"})
+  },
+
     changeText: function () {
       this.$router.push({
         path: "/artists",
