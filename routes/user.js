@@ -97,4 +97,23 @@ router.post("/add-artist", (req, res) => {
   });
 });
 
+router.post("/rem-artist", (req, res) => {
+  const { userId, artist } = req.body;
+
+  // Delete the artist from the likedArtists table for the specified user
+  const query = "DELETE FROM likedArtists WHERE userId = ? AND artist = ?";
+  db.query(query, [userId, artist], (err, result) => {
+    if (err) {
+      console.error("Error removing artist: ", err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while removing the artist." });
+      return;
+    }
+    res.status(200).json({ message: "Artist removed successfully." });
+  });
+});
+
+
+
 module.exports = router;

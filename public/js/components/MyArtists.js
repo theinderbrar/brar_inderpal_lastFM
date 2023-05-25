@@ -13,7 +13,7 @@ export default {
         <div v-for="artist in artists" class="artist_card">
           <img :src="artist.image" alt="">
           <p>{{ artist.artist }}</p>
-          <i style="color:red" @click="removeFromFav(artist)" class="material-icons-outlined">favorite</i>
+          <i style="color:#23e5b5" @click="removeFromFav(artist)" class="fa-solid fa-heart"></i>
         </div>
       </div>
     </div>
@@ -51,7 +51,23 @@ export default {
   },
 
   methods: {
-    removeFromFav(artist) {
+    async removeFromFav(artist) {
+      try {
+        const res = await axios.post(
+          `http://localhost:5000/api/user/rem-artist`,
+          {
+            userId: artist.userId,
+            artist: artist.artist,
+          }
+        );
+        this.artists = this.artists.filter(function(value, index, arr){ 
+          return !(value == artist);
+      });
+  
+        
+      } catch (error) {
+        console.error(error);
+      }
       
     },
   },

@@ -144,6 +144,7 @@ async function getArtistTopTracks(artistName) {
   }
 }
 
+
 module.exports = {
   searchArtists,
   getTopTracks,
@@ -153,5 +154,6 @@ module.exports = {
   getTrackInfo,
   getAlbumTracks,
   getArtistTopAlbums,
+  getArtistTopTracks,
   topTracks,
 };
