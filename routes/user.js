@@ -40,6 +40,7 @@ router.post("/register", (req, res) => {
 // Perform login
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   const query = "SELECT * FROM users WHERE email = ? AND password = ?";
   req.db.query(query, [email, password], (err, result) => {
     if (err) {
@@ -48,7 +49,12 @@ router.post("/login", (req, res) => {
     } else if (result.length === 0) {
       res.status(401).json({ error: "Invalid credentials" });
     } else {
-      res.json({ message: "Login successful" });
+      const user = {
+        name: result[0].name,
+        username: result[0].username,
+        id: result[0].id,
+      };
+      res.json({ message: "Login successful", user });
     }
   });
 });
@@ -56,7 +62,7 @@ router.post("/login", (req, res) => {
 // Get artists for a user
 router.get("/:userId/artists", (req, res) => {
   const { userId } = req.params;
-  console.log(userId)
+  console.log(userId);
   const query = `SELECT * FROM likedArtists WHERE userId = ${userId}`;
   req.db.query(query, [userId], (err, result) => {
     if (err) {
@@ -65,8 +71,8 @@ router.get("/:userId/artists", (req, res) => {
     } else if (result.length === 0) {
       res.status(404).json({ error: "User not found" });
     } else {
-      console.log(result)
-      res.json(result)
+      console.log(result);
+      res.json(result);
       // const likedArtists = result.map((row) => row.artistName);
       // res.json({ likedArtists });
     }
