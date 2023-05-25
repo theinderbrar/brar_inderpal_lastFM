@@ -2,6 +2,8 @@ import Home from "./components/Home.js"
 import LoginPage from "./components/LoginPage.js";
 import SignUpPage from "./components/SignUpPage.js";
 import ArtistsPage from "./components/ArtistsPage.js";
+import MyAlbums from "./components/MyAlbums.js";
+import MyArtists from "./components/MyArtists.js";
 
 const app = Vue.createApp({});
 
@@ -27,6 +29,16 @@ const router = VueRouter.createRouter({
             path: '/artists',
             name: 'artists',
             component: ArtistsPage
+        },
+        {
+            path: '/my-albums',
+            name: 'myalbums',
+            component: MyAlbums
+        },
+        {
+            path: '/my-artists',
+            name: 'myartists',
+            component: MyArtists
         }
     ]
 })

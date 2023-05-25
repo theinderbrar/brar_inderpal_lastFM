@@ -234,13 +234,13 @@ input[type="submit"] {
   object-fit: cover;
   border-radius: inherit;
 }
-.card p{
+.card p {
   color: #e6e6e6;
   line-height: 25px;
   padding-left: 5%;
   font-size: 14px;
 }
-.card p span{
+.card p span {
   color: #636363;
 }
 
@@ -355,6 +355,22 @@ input[type="submit"] {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+/* myalbums */
+.myAlbums_section {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
+  padding: 8% 5%;
+}
+
+/* myartists */
+.my_artist_wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(168.55deg, #212121 0%, #0b0b0b 100%);
+  padding: 8% 5%;
 }
 
 @media (max-width: 430px) {

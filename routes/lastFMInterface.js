@@ -2,6 +2,7 @@ const axios = require("axios");
 
 const API_KEY = "ef4a8f6f178086b89b5aa48b0a533fe2";
 
+
 // Function to search for artists
 async function searchArtists(artistName) {
   try {

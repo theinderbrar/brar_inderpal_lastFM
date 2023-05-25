@@ -4,15 +4,15 @@ export default{
     template:
         `
         <div class="bottom-navbar">
-            <a href="#" class="nav-item">
+            <a @click="goToHome" href="#" class="nav-item">
                 <i class="material-icons">home</i>
                 <p>Home</p>
             </a>
-            <a href="#" class="nav-item">
+            <a @click="goToMyAlbums" href="#" class="nav-item">
                 <i class="material-icons">album</i>
                 <p>Albums</p>
             </a>
-            <a href="#" class="nav-item">
+            <a @click="goToMyArtists" href="#" class="nav-item">
                 <i class="material-icons">person</i>
                 <p>Artists</p>
             </a>
@@ -28,7 +28,19 @@ export default{
                 e.preventDefault()
                 localStorage.removeItem("user")
                 this.$router.push({name:"login"})
-            }
+            },
+            goToHome(e){
+                e.preventDefault();
+                this.$router.push({name:"home"})
+            },
+            goToMyAlbums(e){
+                e.preventDefault();
+                this.$router.push({name:"myalbums"})
+            },
+            goToMyArtists(e){
+                e.preventDefault();
+                this.$router.push({name:"myartists"})
+            },
         }
         
 }

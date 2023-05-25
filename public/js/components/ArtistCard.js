@@ -51,5 +51,9 @@ export default {
         console.error(error);
       }
     },
+
+    getImage(){
+      
+    }
   },
 };

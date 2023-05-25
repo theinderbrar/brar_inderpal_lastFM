@@ -17,7 +17,7 @@ export default {
     },
   },
 
-  mounted() {
-    console.log(this.details);
-  },
+  // mounted() {
+  //   console.log(this.details);
+  // },
 };

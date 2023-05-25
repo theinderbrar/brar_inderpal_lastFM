@@ -12,6 +12,7 @@ const {
 } = require("./lastFMInterface");
 
 const router = express.Router();
+const db = require("../db");
 
 // Search for artists
 router.get("/search", async (req, res) => {
@@ -60,15 +61,45 @@ http://localhost:5000/api/lastfm/search?artistName=ed sheeran
 */
 
 // Get top tracks for an artist
-router.get("/top-tracks", async (req, res) => {
-  const { artistName } = req.query;
+router.get("/:userId/top-tracks", async (req, res) => {
+  const { userId } = req.params;
+  console.log(userId);
+  const query = `SELECT * FROM likedArtists WHERE userId = ${userId}`;
+
   try {
-    const topTracks = await getTopTracks(artistName);
-    res.json(topTracks);
+    const result = await new Promise((resolve, reject) => {
+      req.db.query(query, [userId], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    if (result.length === 0) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const likedArtistAlbums = await Promise.all(
+      result.map(async (item) => {
+        try {
+          const topTracks = await getTopTracks(item.artist);
+          return topTracks;
+        } catch (error) {
+          throw new Error("Failed to get top tracks");
+        }
+      })
+    );
+
+    res.status(200).json(likedArtistAlbums);
   } catch (error) {
-    res.status(500).json({ error: "Failed to get top tracks" });
+    console.error("Error retrieving artists:", error);
+    res.status(500).json({ error: "Failed to retrieve artists" });
   }
 });
+
 /*
 API Example Respones
 http://localhost:5000/api/lastfm/top-tracks?artistName=ed sheeran
@@ -168,16 +199,15 @@ http://localhost:5000/api/lastfm/similar-artists?artistName=ed sheeran
 
 */
 
-router.get('/tracks', async (req, res) => {
-    try {
-      const topTracksData = await topTracks();
-      res.status(200).json(topTracksData)
-    } catch (error) {
-      console.error('Failed to get top tracks:', error);
-      res.status(500).json({ error: 'Failed to get top tracks' });
-    }
-  });
-  
+router.get("/tracks", async (req, res) => {
+  try {
+    const topTracksData = await topTracks();
+    res.status(200).json(topTracksData);
+  } catch (error) {
+    console.error("Failed to get top tracks:", error);
+    res.status(500).json({ error: "Failed to get top tracks" });
+  }
+});
 
 // Get artist info
 router.get("/artist-info", async (req, res) => {
