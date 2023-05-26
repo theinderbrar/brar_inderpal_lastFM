@@ -114,6 +114,4 @@ router.post("/rem-artist", (req, res) => {
   });
 });
 
-
-
 module.exports = router;

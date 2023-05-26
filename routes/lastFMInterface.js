@@ -2,7 +2,6 @@ const axios = require("axios");
 
 const API_KEY = "ef4a8f6f178086b89b5aa48b0a533fe2";
 
-
 // Function to search for artists
 async function searchArtists(artistName) {
   try {
@@ -41,21 +40,6 @@ async function getTopTracks(artistName) {
     return response.data.toptracks.track;
   } catch (error) {
     console.error("Error getting top tracks:", error.response.data);
-    throw error;
-  }
-}
-
-// Function to get similar artists for an artist
-async function getSimilarArtists(artistName) {
-  try {
-    const response = await axios.get(
-      `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${encodeURIComponent(
-        artistName
-      )}&api_key=${API_KEY}&format=json`
-    );
-    return response.data.similarartists.artist;
-  } catch (error) {
-    console.error("Error getting similar artists:", error.response.data);
     throw error;
   }
 }
@@ -130,30 +114,13 @@ async function getArtistTopAlbums(artistName) {
   }
 }
 
-async function getArtistTopTracks(artistName) {
-  try {
-    const response = await axios.get(
-      `http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${encodeURIComponent(
-        artistName
-      )}&api_key=${API_KEY}&format=json`
-    );
-    return response.data.toptracks.track;
-  } catch (error) {
-    console.error("Error getting artist top tracks:", error.response.data);
-    throw error;
-  }
-}
-
-
 module.exports = {
   searchArtists,
   getTopTracks,
-  getSimilarArtists,
   getArtistInfo,
   getAlbumInfo,
   getTrackInfo,
   getAlbumTracks,
   getArtistTopAlbums,
-  getArtistTopTracks,
   topTracks,
 };
