@@ -53,10 +53,6 @@ The Music Search App is a web application that allows users to search for songs 
 - To remove an artist from your favorites, click on the heart icon again. The button color will change to white.
 - Head to the My Albums section to access a comprehensive list of albums from your favorite artists.
 
-## Contributing
-
-Contributions are welcome! If you have any ideas, suggestions, or improvements, please open an issue or submit a pull request.
-
 ## License
 
 This project is licensed under the MIT License.
