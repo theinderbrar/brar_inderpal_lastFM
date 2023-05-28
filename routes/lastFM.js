@@ -11,7 +11,6 @@ const {
 } = require("./lastFMInterface");
 
 const router = express.Router();
-const db = require("../db");
 
 // Search for artists
 router.get("/search", async (req, res) => {

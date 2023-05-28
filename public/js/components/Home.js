@@ -114,4 +114,7 @@ export default {
     PopularSection,
     BottomNav,
   },
+  mounted(){
+    window.scrollTo(0, 0);
+  }
 };

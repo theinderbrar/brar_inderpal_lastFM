@@ -48,6 +48,7 @@ export default {
     };
 
     getFavArtists();
+    window.scrollTo(0, 0);
   },
 
   methods: {
@@ -60,15 +61,12 @@ export default {
             artist: artist.artist,
           }
         );
-        this.artists = this.artists.filter(function(value, index, arr){ 
+        this.artists = this.artists.filter(function (value, index, arr) {
           return !(value == artist);
-      });
-  
-        
+        });
       } catch (error) {
         console.error(error);
       }
-      
     },
   },
 };

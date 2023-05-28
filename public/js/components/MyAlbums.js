@@ -20,7 +20,7 @@ export default {
 
   components: {
     PopularSection,
-    BottomNav
+    BottomNav,
   },
 
   data() {
@@ -40,8 +40,10 @@ export default {
         `http://localhost:5000/api/lastfm/${this.userId}/top-tracks`
       );
       this.myalbums = res.data;
-      console.log(res.data)
+      console.log(res.data);
     };
     getTopTracks();
+
+    window.scrollTo(0, 0);
   },
 };
